@@ -107,6 +107,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <ConformanceMode>true</ConformanceMode>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +146,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <ConformanceMode>true</ConformanceMode>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,12 +163,12 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Console.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MySet\MySet.vcxproj">
       <Project>{c90d0c8a-8745-4b92-8115-70f4e647759e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Console.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
