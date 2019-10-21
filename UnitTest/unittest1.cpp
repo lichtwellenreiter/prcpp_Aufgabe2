@@ -114,7 +114,7 @@ namespace UnitTest
 			Assert::IsTrue(s1 == s4);
 			Assert::AreEqual(s1.size(), s4.size());
 		}
-
+		/*
 		TEST_METHOD(Merge_Ordered) {
 			OrderedSet s1({ 3,2,1,1,2 });
 			OrderedSet s2({ 3,2,4 });
@@ -194,5 +194,6 @@ namespace UnitTest
 			Assert::IsTrue(s2.getLarger(20) == OrderedSet());
 			Assert::IsTrue(s2.getLarger(21) == OrderedSet());
 		}
+		*/
 	};
 }

@@ -7,6 +7,8 @@ int main() {
 	Set s2({ 1,2,3 }); // Initializer List
 	Set s21(s2);
 	Set s22 = s2;
+	size_t groesse = s2.size();
+	cout << groesse << endl;
 	
 	return 0;
 }

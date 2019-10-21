@@ -13,8 +13,9 @@ protected:
 	// geschützte Instanzmethoden
 	int* begin() const; // gibt einen Zeiger auf das erste Element
 						// der Menge zurueck (nullptr falls leer)
-	int& operator[](size_t i); // gibt das i-te Element des Mengen-Arrays
+	int& operator[](size_t i) const; // gibt das i-te Element des Mengen-Arrays
 	// zurueck
+
 	Set merge(const Set& set) const; // gibt als neue Menge die Vereinigungs-
 	// menge dieser Menge mit set zurueck
 	Set difference(const Set& set) const; // gibt als neue Menge die Differenzmenge
@@ -57,6 +58,7 @@ public:
 		return os;
 	}
 	*/
+
 	// Klassen-Methoden
 	// Vereinigungsmenge (die Bezeichnung union ist nicht möglich)
 	static Set merge(const Set& set1, const Set& set2) { return set1.merge(set2); }
