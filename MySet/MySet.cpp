@@ -2,11 +2,13 @@
 #include <iostream>
 #include <memory>
 #include <initializer_list>
+#include <iterator>
+#include <algorithm>
 
 using namespace std;
 
 Set::Set(size_t size) 
-	: m_values(new int[size]), m_size(0) 
+	: m_values(new int[size], default_delete<int[]>()), m_size(0)
 {
 	cout << "private-ctor " << endl;
 }
@@ -32,7 +34,7 @@ Set Set::merge(const Set& set) const
 {
 	// erstelle eine neue Menge mit allen Elementen von this
 	Set result(m_size + set.m_size);
-	copy_n(begin(), m_size, result.begin());
+	std::copy_n(begin(), m_size, result.begin());
 	result.m_size = m_size;
 	// fuege nur jene Elemente von set dazu, die in this noch nicht enthalten sind
 	for (size_t i = 0; i < set.m_size; ++i) {
@@ -43,7 +45,7 @@ Set Set::merge(const Set& set) const
 
 Set Set::difference(const Set& set) const
 {
-	Set res(size() + set.size());
+	Set res(m_size + set.m_size);
 	for (auto i = 0; i < set.m_size; i++) {
 		if (!contains(set[i])) res[res.m_size++] = set[i];
 	}
@@ -52,7 +54,7 @@ Set Set::difference(const Set& set) const
 
 Set Set::intersection(const Set& set) const
 {
-	Set res(size() + set.size());
+	Set res(m_size + set.m_size);
 	for (auto i = 0; i < set.m_size; i++) {
 		if (contains(set[i])) res[res.m_size++] = set[i];
 	}
@@ -108,16 +110,12 @@ size_t Set::size() const
 }
 
 
-
-//
-
-/*
 Set::~Set()
 {
-	cout << "free" << endl;
-	delete[] &m_values;
+	cout << "dtor" << endl;
+	//delete[] m_values;
 }
-*/
+
 
 
 

@@ -2,6 +2,7 @@
 #include "../MySet/MySet.h"
 using namespace std;
 int main() {
+	/*
 	Set s1;
 	Set s11(s1);
 	Set s2({ 1,2,3 }); // Initializer List
@@ -17,5 +18,10 @@ int main() {
 	bool res = s2.contains(4);
 	cout << res1 << endl;
 	cout << res << endl;
+	*/
+	Set s; // bewusst in 2 Schritten
+	s = Set::difference(Set({ 1,2,3 }), Set({ 2,3,4 }));
+	cout << s << endl;
+
 	return 0;
 }
