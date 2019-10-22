@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <iostream>
 
 using namespace std;
 
@@ -13,7 +14,8 @@ protected:
 	// geschützte Instanzmethoden
 	int* begin() const; // gibt einen Zeiger auf das erste Element
 						// der Menge zurueck (nullptr falls leer)
-	int& operator[](size_t i) const; // gibt das i-te Element des Mengen-Arrays
+	int operator[](size_t i) const; // gibt das i-te Element des Mengen-Arrays
+	int& operator[](size_t i);
 	// zurueck
 
 	Set merge(const Set& set) const; // gibt als neue Menge die Vereinigungs-
@@ -47,7 +49,7 @@ public:
 	{
 		return size() == set.size() && containsAll(set) && set.containsAll(*this);
 	}
-	/*
+	
 	// Ausgabe-Operator für Output-Streams (Inline-Implementation schon gegeben)
 	friend ostream& operator<<(ostream& os, const Set& s) {
 		const int* const vptr = s.begin();
@@ -57,7 +59,7 @@ public:
 		os << "}";
 		return os;
 	}
-	*/
+	
 
 	// Klassen-Methoden
 	// Vereinigungsmenge (die Bezeichnung union ist nicht möglich)

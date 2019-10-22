@@ -18,9 +18,14 @@ int* Set::begin() const
 	}
 	return m_values.get();
 }
-int& Set::operator[](size_t i) const
+int Set::operator[](size_t i) const
 {
 	return *(begin()+i);
+}
+
+int& Set::operator[](size_t i)
+{
+	return *(begin() + i);
 }
 
 Set Set::merge(const Set& set) const
@@ -38,7 +43,7 @@ Set Set::merge(const Set& set) const
 
 Set Set::difference(const Set& set) const
 {
-	Set res(m_size);
+	Set res(size() + set.size());
 	for (auto i = 0; i < set.m_size; i++) {
 		if (!contains(set[i])) res[res.m_size++] = set[i];
 	}
@@ -47,11 +52,11 @@ Set Set::difference(const Set& set) const
 
 Set Set::intersection(const Set& set) const
 {
-	Set res(m_size);
+	Set res(size() + set.size());
 	for (auto i = 0; i < set.m_size; i++) {
 		if (contains(set[i])) res[res.m_size++] = set[i];
 	}
-	return Set();
+	return res;
 }
 
 Set::Set()
@@ -71,22 +76,21 @@ Set::Set(const initializer_list<int> &initlist)
 	cout << "type conversion constructor" << endl;
 
 	for (auto ptr = initlist.begin(); ptr != initlist.end(); ptr++) {
-		(*this)[m_size++] = *ptr;
+		if(!contains(*ptr)) (*this)[m_size++] = *ptr;
 	}
 }
 
 bool Set::contains(int e) const
 {
-
-	bool res = false;
 	for (size_t i = 0; i < this->m_size; ++i) {
-		if (begin()[i] == e) return res;
+		if (begin()[i] == e) return true;
 	}
-	return res;
+	return false;
 }
 
 bool Set::containsAll(const Set& set) const
 {
+	if (set.isEmpty()) return true;
 	bool res = false;
 	for (auto i = 0; i < set.size(); i++) {
 		res = contains(set[i]);
