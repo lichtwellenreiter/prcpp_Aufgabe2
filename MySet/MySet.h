@@ -21,9 +21,11 @@ protected:
 	Set merge(const Set& set) const; // gibt als neue Menge die Vereinigungs-
 	// menge dieser Menge mit set zurueck
 	Set difference(const Set& set) const; // gibt als neue Menge die Differenzmenge
+	Set difference(Set&& set) const;
 	// zwischen set und dieser Menge
 	// (set \ this) zurueck
 	Set intersection(const Set& set) const; // gibt als neue Menge die Schnittmenge
+	Set intersection(Set&& set) const;
 	// dieser Menge mit set zurueck
 	
 public:

@@ -2,8 +2,7 @@
 #include <iostream>
 #include <memory>
 #include <initializer_list>
-#include <iterator>
-#include <algorithm>
+
 
 using namespace std;
 
@@ -15,9 +14,6 @@ Set::Set(size_t size)
 
 int* Set::begin() const
 {
-	if (this->m_size == 0) {
-		return nullptr;
-	}
 	return m_values.get();
 }
 int Set::operator[](size_t i) const
@@ -47,18 +43,49 @@ Set Set::difference(const Set& set) const
 {
 	Set res(m_size + set.m_size);
 	for (auto i = 0; i < set.m_size; i++) {
-		if (!contains(set[i])) res[res.m_size++] = set[i];
+		if (!this->contains(set[i])) res[res.m_size++] = set[i];
 	}
 	return res;
+}
+
+Set Set::difference(Set&& set) const {
+	if (set.m_values.use_count() == 1) {
+		const size_t startSize = set.m_size;
+		set.m_size = 0;
+		for (auto i = 0; i < startSize; i++) {
+			if (!this->contains(set[i])) {
+				set[set.m_size] = set[i];
+				set.m_size++;
+			}
+		}
+		return set;
+	}
+	return difference(set);
 }
 
 Set Set::intersection(const Set& set) const
 {
 	Set res(m_size + set.m_size);
 	for (auto i = 0; i < set.m_size; i++) {
-		if (contains(set[i])) res[res.m_size++] = set[i];
+		if (this->contains(set[i])) res[res.m_size++] = set[i];
 	}
 	return res;
+}
+
+Set Set::intersection(Set&& set) const 
+{
+	if (set.m_values.use_count() == 1) {
+		const size_t startSize = set.m_size;
+		set.m_size = 0;
+		for (auto i = 0; i < startSize; i++) {
+			if (this->contains(set[i])) {
+				set[set.m_size] = set[i];
+				set.m_size++;
+			}
+		}
+		return set;
+	}
+	return intersection(set);
 }
 
 Set::Set()
