@@ -3,7 +3,6 @@
 #include <memory>
 #include <initializer_list>
 
-
 using namespace std;
 
 Set::Set(size_t size) 
@@ -109,6 +108,17 @@ Set::Set(const initializer_list<int> &initlist)
 	}
 }
 
+Set::Set(const int* values, size_t size)
+	:Set(size)
+{
+	for (size_t i = 0; i < size; i++) {
+		if (!contains(values[i])) {
+			m_values[m_size] = values[i];
+			m_size++;
+		}
+	}
+}
+
 bool Set::contains(int e) const
 {
 	for (size_t i = 0; i < this->m_size; ++i) {
@@ -136,11 +146,10 @@ size_t Set::size() const
 	return this->m_size;
 }
 
-
 Set::~Set()
 {
 	cout << "dtor" << endl;
-	//delete[] m_values;
+	m_values.reset();
 }
 
 

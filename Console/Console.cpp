@@ -1,6 +1,9 @@
 #include <iostream>
 #include "../MySet/MySet.h"
+#include "../MySet/OrderedSet.h"
+
 using namespace std;
+
 int main() {
 	/*
 	Set s1;
@@ -22,6 +25,17 @@ int main() {
 	Set s; // bewusst in 2 Schritten
 	s = Set::difference(Set({ 1,2,3 }), Set({ 2,3,4 }));
 	cout << s << endl;
-
+	cout << "before" << endl;
+	OrderedSet os1({ 1,2});
+	OrderedSet os2({ 3,4,5 }); cout << "ctor end" << endl;
+	OrderedSet os3({ });
+	//cout << os1 << endl;
+	cout << os2.getLarger(4) << endl; 
+	cout << os2.getSmaller(4) << endl;
+	cout << Set::merge(os1, os3) << endl;
+	cout << "switch" << endl;
+	cout << Set::merge(os3, os1) << endl;
+	cout << Set::merge(os1, os2) << endl;
+	cout << "after" << endl;
 	return 0;
 }

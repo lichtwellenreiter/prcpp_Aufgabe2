@@ -10,15 +10,15 @@ protected:
 	size_t m_size;
 	shared_ptr<int[]> m_values;
 	explicit Set(size_t size);
-	
+
 	// geschützte Instanzmethoden
-	int* begin() const; // gibt einen Zeiger auf das erste Element
-						// der Menge zurueck (nullptr falls leer)
+	
+	// der Menge zurueck (nullptr falls leer)
 	int operator[](size_t i) const; // gibt das i-te Element des Mengen-Arrays
 	int& operator[](size_t i);
 	// zurueck
 
-	Set merge(const Set& set) const; // gibt als neue Menge die Vereinigungs-
+	virtual Set merge(const Set& set) const; // gibt als neue Menge die Vereinigungs-
 	// menge dieser Menge mit set zurueck
 	Set difference(const Set& set) const; // gibt als neue Menge die Differenzmenge
 	Set difference(Set&& set) const;
@@ -30,11 +30,12 @@ protected:
 	
 public:
 	// öffentliche Methoden
-
+	virtual int* begin() const; // gibt einen Zeiger auf das erste Element
 	// Kostruktoren und Destruktor
 	Set();
 	Set(const Set& s);
 	Set(const initializer_list<int>& initlist);
+	Set(const int* values, size_t size);
 	~Set();
 	
 	// Instanzmethoden
