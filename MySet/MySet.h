@@ -63,7 +63,6 @@ public:
 		return os;
 	}
 	
-
 	// Klassen-Methoden
 	// Vereinigungsmenge (die Bezeichnung union ist nicht möglich)
 	static Set merge(const Set& set1, const Set& set2) { return set1.merge(set2); }

@@ -15,6 +15,7 @@ int* Set::begin() const
 {
 	return m_values.get();
 }
+
 int Set::operator[](size_t i) const
 {
 	return *(begin()+i);
@@ -111,17 +112,17 @@ Set::Set(const initializer_list<int> &initlist)
 Set::Set(const int* values, size_t size)
 	:Set(size)
 {
-	for (size_t i = 0; i < size; i++) {
+	for (auto i = 0; i < size; i++) {
 		if (!contains(values[i])) {
-			m_values[m_size] = values[i];
-			m_size++;
+			m_values[m_size++] = values[i];			
 		}
 	}
+	cout << "ctor with size" << endl;
 }
 
 bool Set::contains(int e) const
 {
-	for (size_t i = 0; i < this->m_size; ++i) {
+	for (auto i = 0; i < this->m_size; ++i) {
 		if (begin()[i] == e) return true;
 	}
 	return false;
@@ -151,9 +152,3 @@ Set::~Set()
 	cout << "dtor" << endl;
 	m_values.reset();
 }
-
-
-
-
-
-

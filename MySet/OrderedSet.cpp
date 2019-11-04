@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 OrderedSet::OrderedSet()
 	: Set::Set(), m_start(0)
 {
@@ -16,7 +15,7 @@ OrderedSet::OrderedSet()
 OrderedSet::OrderedSet(size_t size) 
 	: Set(size), m_start(0)
 {
-
+	cout << "ctor with size" << endl;
 }
 
 OrderedSet::OrderedSet(const OrderedSet& s)
@@ -45,12 +44,12 @@ int* OrderedSet::begin() const
 
 void OrderedSet::setSort() {
 	int* beg = begin(); 
-	std::sort(beg, beg + m_size);
+	sort(beg, beg + m_size);
 }
 
 OrderedSet OrderedSet::getSmaller(int x) const
 {
-	for (size_t i = 0; i < m_size; i++) {
+	for (auto i = 0; i < m_size; i++) {
 		if ((*this)[i] >= x) {
 			return OrderedSet(begin(), i);
 		}
@@ -58,56 +57,69 @@ OrderedSet OrderedSet::getSmaller(int x) const
 	return *this;
 }
 
-
 OrderedSet OrderedSet::getLarger(int x) const
 {
-	for (size_t i = 0; i < m_size; i++) {
+	for (auto i = 0; i < m_size; i++) {
 		if ((*this)[i] > x) {
 			return OrderedSet(begin() + i, m_size - i);
 		}
 	}
-
 	return OrderedSet();
 }
 
 Set OrderedSet::merge(const Set& set) const
 {
 	const auto *s = dynamic_cast<const OrderedSet*>(&set);
+
 	if (s == nullptr) {
 		return Set::merge(set);
 	}
+
 	if (set.size() == 0) {
 		return *this;
 	}
+
 	if (this->size() == 0) {
 		return set;
 	}
-	OrderedSet set1 = (*s), result(size() + set1.size());
-	int* pt = begin(), * ps = set1.begin();
-	size_t i = 0, j = 0;
-	size_t tS = size(), sS = set1.size();
-	while (i < tS || j < sS) {
-		int iVal = pt[i], jVal = ps[j], val;
-		if (i < tS && j < sS) {
-			if (iVal <= jVal) { 
-				val = iVal; i++; 
+
+	OrderedSet set1 = (*s);
+	size_t i = 0;
+	size_t j = 0;
+	size_t thisSize = size();
+	size_t setSize = set1.size();
+	OrderedSet res(thisSize + setSize);
+
+	int* pt = begin(); 
+	int* ps = set1.begin();
+	int value;
+	int iValue;
+	int jValue;
+
+	while (i < thisSize || j < setSize) {
+		iValue = pt[i];
+		jValue = ps[j];
+		if (i < thisSize && j < setSize) {
+			if (iValue <= jValue) {
+				value = iValue;
+				i++; 
 			}
-			if (iVal >= jVal) { 
-				val = jVal; j++; 
+
+			if (iValue >= jValue) {
+				value = jValue;
+				j++; 
 			}
 		}
-		else if (j < sS) {
-			val = jVal; j++;
+
+		else if (j < setSize) {
+			value = jValue; j++;
 		} 
-		else if (i < tS) {
-			val = iVal; i++;
+
+		else if (i < thisSize) {
+			value = iValue; i++;
 		}
 
-		result[result.m_size++] = val;
+		res[res.m_size++] = value;
 	} 
-	
-	return result;
-
+	return res;
 }
-
-
