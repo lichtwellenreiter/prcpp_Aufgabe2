@@ -41,7 +41,7 @@ Set Set::merge(const Set& set) const
 
 Set Set::difference(const Set& set) const
 {
-	Set res(m_size + set.m_size);
+	Set res(set.m_size);
 	for (auto i = 0; i < set.m_size; i++) {
 		if (!this->contains(set[i])) res[res.m_size++] = set[i];
 	}
@@ -65,7 +65,7 @@ Set Set::difference(Set&& set) const {
 
 Set Set::intersection(const Set& set) const
 {
-	Set res(m_size + set.m_size);
+	Set res(m_size);
 	for (auto i = 0; i < set.m_size; i++) {
 		if (this->contains(set[i])) res[res.m_size++] = set[i];
 	}
@@ -123,7 +123,7 @@ Set::Set(const int* values, size_t size)
 bool Set::contains(int e) const
 {
 	for (auto i = 0; i < this->m_size; ++i) {
-		if (begin()[i] == e) return true;
+		if ((*this)[i] == e) return true;
 	}
 	return false;
 }
@@ -131,11 +131,11 @@ bool Set::contains(int e) const
 bool Set::containsAll(const Set& set) const
 {
 	if (set.isEmpty()) return true;
-	bool res = false;
 	for (auto i = 0; i < set.size(); i++) {
-		res = contains(set[i]);
+		if (!contains(set[i]))
+			return false;
 	}
-	return res;
+	return true;
 }
 
 bool Set::isEmpty() const {

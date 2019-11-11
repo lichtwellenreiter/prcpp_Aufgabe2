@@ -21,7 +21,6 @@ OrderedSet::OrderedSet(size_t size)
 OrderedSet::OrderedSet(const OrderedSet& s)
 	: Set::Set(s), m_start(0)
 {
-	setSort();
 	cout << "copy ctor" << endl;
 }
 
@@ -33,8 +32,7 @@ OrderedSet::OrderedSet(const initializer_list<int>& initlist)
 
 OrderedSet::OrderedSet(const int* values, size_t size) 
 	: Set(values, size), m_start(0) 
-{ 
-	setSort(); 
+{
 }
 
 int* OrderedSet::begin() const
